@@ -6,7 +6,6 @@ import 'package:flutter_movie/domain/bloc/movie_list/movie_list_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
 import 'package:flutter_movie/domain/repository/movie_repository.dart';
-import 'package:flutter_movie/widgets/bottom_loading_indicator.dart';
 import 'package:flutter_movie/widgets/movie_list_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -55,7 +54,32 @@ class _MovieListScreenState extends State<MovieListScreen> {
               }
               if (state is MovieListSuccess) {
                 if (state.movieList.isNotEmpty) {
-                  return GridView.builder(
+                  return CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            print('GridView index: $index');
+                            print(
+                                'GridView movieList length: ${state.movieList.length}');
+                            return MovieListWidget(
+                                movieList: state.movieList[index]);
+                          },
+                          childCount: state.movieList.length,
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    ],
+                  );
+                  /*return GridView.builder(
                     itemCount: state.hasReachedMax
                         ? state.movieList.length
                         : state.movieList.length + 1,
@@ -65,11 +89,14 @@ class _MovieListScreenState extends State<MovieListScreen> {
                     ),
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
+                      print('GridView index: $index');
+                      print(
+                          'GridView movieList length: ${state.movieList.length}');
                       return index >= state.movieList.length
                           ? BottomLoadingIndicator()
                           : MovieListWidget(movieList: state.movieList[index]);
                     },
-                  );
+                  );*/
                 }
               }
               if (state is MovieListError) {
