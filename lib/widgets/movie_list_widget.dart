@@ -11,63 +11,48 @@ class MovieListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Card(
-      elevation: 8.0,
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        children: [
-          FadeInImage(
-            placeholder: AssetImage(Constant.placeHolderImgPath),
-            fit: BoxFit.fitWidth,
-            image: NetworkImage(
-              '${Constant.imageAppendUrl}${movieList.posterImg}',
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text(
-            movieList.title,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-        ],
-      ),
-    );*/
     return Card(
       elevation: 8.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Flexible(
-            child: FadeInImage(
-              placeholder: AssetImage(Constant.placeHolderImgPath),
-              image: NetworkImage(
-                '${Constant.imageAppendUrl}${movieList.posterImg}',
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          print('Click on ${movieList.title}');
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              flex: 2,
+              child: FadeInImage(
+                fit: BoxFit.cover,
+                placeholder: AssetImage(Constant.placeHolderImgPath),
+                image: NetworkImage(
+                  '${Constant.imageAppendUrl}${movieList.posterImg}',
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text(
-            movieList.title,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
+            SizedBox(
+              height: 10.0,
             ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-        ],
+            Center(
+              child: Text(
+                movieList.title,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+          ],
+        ),
       ),
     );
   }

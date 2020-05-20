@@ -5,7 +5,7 @@ class BottomLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: Colors.black,
+      height: 100.0,
       child: Center(
         child: CircularProgressIndicator(
           strokeWidth: 1.5,

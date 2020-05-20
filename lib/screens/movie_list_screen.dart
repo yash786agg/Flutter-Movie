@@ -6,6 +6,7 @@ import 'package:flutter_movie/domain/bloc/movie_list/movie_list_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
 import 'package:flutter_movie/domain/repository/movie_repository.dart';
+import 'package:flutter_movie/widgets/bottom_loading_indicator.dart';
 import 'package:flutter_movie/widgets/movie_list_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -57,6 +58,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   if (state.movieList.isNotEmpty) {
                     return CustomScrollView(
                       controller: _scrollController,
+                      shrinkWrap: true,
                       slivers: [
                         SliverGrid(
                           delegate: SliverChildBuilderDelegate(
@@ -70,12 +72,11 @@ class _MovieListScreenState extends State<MovieListScreen> {
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount:
                                 orientation == Orientation.portrait ? 2 : 3,
+                            childAspectRatio: 0.55,
                           ),
                         ),
                         SliverToBoxAdapter(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          child: BottomLoadingIndicator(),
                         )
                       ],
                     );
