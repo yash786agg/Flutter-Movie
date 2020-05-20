@@ -11,6 +11,35 @@ class MovieListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*return Card(
+      elevation: 8.0,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        children: [
+          FadeInImage(
+            placeholder: AssetImage(Constant.placeHolderImgPath),
+            fit: BoxFit.fitWidth,
+            image: NetworkImage(
+              '${Constant.imageAppendUrl}${movieList.posterImg}',
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Text(
+            movieList.title,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+        ],
+      ),
+    );*/
     return Card(
       elevation: 8.0,
       child: Column(

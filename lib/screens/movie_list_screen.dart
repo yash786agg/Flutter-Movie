@@ -43,68 +43,69 @@ class _MovieListScreenState extends State<MovieListScreen> {
       body: SafeArea(
         top: true,
         bottom: false,
-        child: BlocBuilder(
-            bloc: _movieListBloc,
-            // ignore: missing_return
-            builder: (context, state) {
-              if (state is MovieListLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is MovieListSuccess) {
-                if (state.movieList.isNotEmpty) {
-                  return CustomScrollView(
-                    controller: _scrollController,
-                    slivers: [
-                      SliverGrid(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            print('GridView index: $index');
-                            print(
-                                'GridView movieList length: ${state.movieList.length}');
-                            return MovieListWidget(
-                                movieList: state.movieList[index]);
-                          },
-                          childCount: state.movieList.length,
-                        ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    ],
+        child: new OrientationBuilder(builder: (context, orientation) {
+          return BlocBuilder(
+              bloc: _movieListBloc,
+              // ignore: missing_return
+              builder: (context, state) {
+                if (state is MovieListLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                  /*return GridView.builder(
-                    itemCount: state.hasReachedMax
-                        ? state.movieList.length
-                        : state.movieList.length + 1,
-                    controller: _scrollController,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      print('GridView index: $index');
-                      print(
-                          'GridView movieList length: ${state.movieList.length}');
-                      return index >= state.movieList.length
-                          ? BottomLoadingIndicator()
-                          : MovieListWidget(movieList: state.movieList[index]);
-                    },
-                  );*/
                 }
-              }
-              if (state is MovieListError) {
-                return Center(
-                  child: Text('failed to fetch response: ${state.errorCode}'),
-                );
-              }
-            }),
+                if (state is MovieListSuccess) {
+                  if (state.movieList.isNotEmpty) {
+                    return CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        SliverGrid(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return MovieListWidget(
+                                  movieList: state.movieList[index]);
+                            },
+                            childCount: state.movieList.length,
+                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                orientation == Orientation.portrait ? 2 : 3,
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      ],
+                    );
+                    /*return GridView.builder(
+                      itemCount: state.hasReachedMax
+                          ? state.movieList.length
+                          : state.movieList.length + 1,
+                      controller: _scrollController,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        print('GridView index: $index');
+                        print(
+                            'GridView movieList length: ${state.movieList.length}');
+                        return index >= state.movieList.length
+                            ? BottomLoadingIndicator()
+                            : MovieListWidget(movieList: state.movieList[index]);
+                      },
+                    );*/
+                  }
+                }
+                if (state is MovieListError) {
+                  return Center(
+                    child: Text('failed to fetch response: ${state.errorCode}'),
+                  );
+                }
+              });
+        }),
       ),
     );
   }
