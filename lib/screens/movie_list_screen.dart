@@ -11,7 +11,7 @@ import 'package:flutter_movie/widgets/movie_list_widget.dart';
 import 'package:http/http.dart' as http;
 
 class MovieListScreen extends StatefulWidget {
-  final MovieRepository movieRepository = MovieRepository(
+  final MovieRepository _movieRepository = MovieRepository(
       movieApiClient: MovieApiClient(httpClient: http.Client()));
 
   @override
@@ -27,7 +27,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _movieListBloc = MovieListBloc(movieRepository: widget.movieRepository)
+    _movieListBloc = MovieListBloc(movieRepository: widget._movieRepository)
       ..add(FetchMovieList());
   }
 
@@ -80,24 +80,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
                         )
                       ],
                     );
-                    /*return GridView.builder(
-                      itemCount: state.hasReachedMax
-                          ? state.movieList.length
-                          : state.movieList.length + 1,
-                      controller: _scrollController,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                      ),
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        print('GridView index: $index');
-                        print(
-                            'GridView movieList length: ${state.movieList.length}');
-                        return index >= state.movieList.length
-                            ? BottomLoadingIndicator()
-                            : MovieListWidget(movieList: state.movieList[index]);
-                      },
-                    );*/
                   }
                 }
                 if (state is MovieListError) {

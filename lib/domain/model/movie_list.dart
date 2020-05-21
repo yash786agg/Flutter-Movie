@@ -1,4 +1,5 @@
 class MovieList {
+  int movieId;
   String posterImg;
   String title;
   var vote;
@@ -6,6 +7,7 @@ class MovieList {
   String releaseDate;
 
   MovieList({
+    this.movieId,
     this.posterImg,
     this.title,
     this.vote,
@@ -18,6 +20,7 @@ class MovieList {
     final list = List<MovieList>();
     for (final item in jsonArray) {
       MovieList movieList = MovieList();
+      movieList.movieId = item['id'];
       movieList.posterImg = item['poster_path'];
       movieList.title = item['title'];
       movieList.vote = item['vote_average'];
