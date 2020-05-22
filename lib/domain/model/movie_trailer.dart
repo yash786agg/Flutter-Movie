@@ -2,7 +2,7 @@ class MovieTrailer {
   String trailerKey;
   String trailerName;
   String trailerSite;
-  String trailerSize;
+  int trailerSize;
 
   MovieTrailer({
     this.trailerKey,
