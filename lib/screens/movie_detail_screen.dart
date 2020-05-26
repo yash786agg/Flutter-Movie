@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_bloc.dart';
+import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_bloc_provider.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_state.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
-import 'package:flutter_movie/datasource/remote/api_client.dart';
-import 'package:flutter_movie/domain/repository/movie_repository.dart';
-import 'package:http/http.dart' as http;
 
 class MovieDetailScreen extends StatefulWidget {
   final MovieList movieList;
-  final MovieRepository _movieRepository = MovieRepository(
-      movieApiClient: MovieApiClient(httpClient: http.Client()));
   MovieDetailScreen({this.movieList}) : assert(movieList != null);
 
   @override
@@ -22,11 +18,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   MovieTrailerBloc _movieTrailerBloc;
 
   @override
-  void initState() {
-    super.initState();
-    _movieTrailerBloc =
-        MovieTrailerBloc(movieRepository: widget._movieRepository)
-          ..add(FetchMovieTrailer(movieId: widget.movieList.movieId));
+  void didChangeDependencies() {
+    print('didChangeDependencies MovieDetailScreen');
+    _movieTrailerBloc = MovieTrailerBlocProvider.of(context)
+      ..add(FetchMovieTrailer(movieId: widget.movieList.movieId));
+    super.didChangeDependencies();
   }
 
   @override
@@ -113,5 +109,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _movieTrailerBloc.close();
+    super.dispose();
   }
 }

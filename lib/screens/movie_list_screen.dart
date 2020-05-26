@@ -1,19 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_movie/datasource/remote/api_client.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
-import 'package:flutter_movie/domain/repository/movie_repository.dart';
 import 'package:flutter_movie/widgets/bottom_loading_indicator.dart';
 import 'package:flutter_movie/widgets/movie_list_widget.dart';
-import 'package:http/http.dart' as http;
 
 class MovieListScreen extends StatefulWidget {
-  final MovieRepository movieRepository = MovieRepository(
-      movieApiClient: MovieApiClient(httpClient: http.Client()));
-
   @override
   _MovieListScreenState createState() => _MovieListScreenState();
 }
@@ -27,8 +21,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _movieListBloc = MovieListBloc(movieRepository: widget.movieRepository)
-      ..add(FetchMovieList());
+    print('initState MovieListScreen');
+
+    _movieListBloc = MovieListBloc()..add(FetchMovieList());
   }
 
   @override
@@ -96,6 +91,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _movieListBloc.close();
     super.dispose();
   }
 
