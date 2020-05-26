@@ -26,20 +26,5 @@ class HTTPProvider {
       throw HTTPException(
           code: response.statusCode, message: response.body.toString());
     }
-    /*switch (response.statusCode) {
-      case 200:
-
-      case 400:
-        throw HTTPException(code: response.statusCode,message:response.body.toString(),);
-      case 401:
-
-      case 403:
-        throw HTTPException(code: response.statusCode,message:response.body.toString(),);
-      case 500:
-
-      default:
-        throw HTTPException(code: response.statusCode,message:
-            'Error occurred while Communication with Server with StatusCode');
-    }*/
   }
 }

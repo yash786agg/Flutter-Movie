@@ -5,6 +5,7 @@ import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_bloc_provi
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_state.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
+import 'package:flutter_movie/widgets/movie_detail_app_bar.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final MovieList movieList;
@@ -16,6 +17,22 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   MovieTrailerBloc _movieTrailerBloc;
+  ScrollController _scrollController;
+
+  bool lastStatus = true;
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
 
   @override
   void didChangeDependencies() {
@@ -26,87 +43,123 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   }
 
   @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  // Link:- https://flutter-widget.live/widgets/NestedScrollView
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Movie Detail'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-        elevation: 16.0,
-      ),
       body: SafeArea(
-        top: true,
+        top: false,
         bottom: false,
-        child: Container(
-          margin: EdgeInsets.all(10.0),
-          child: BlocBuilder(
-            bloc: _movieTrailerBloc,
-            builder: (context, state) {
-              if (state is MovieTrailerLoading) {
-                return CircularProgressIndicator();
-              }
-              if (state is MovieTrailerSuccess) {
-                if (state.movieTrailerList.isNotEmpty) {
-                  print(
-                      'movieTrailerList length: ${state.movieTrailerList.length}');
-                  return CircularProgressIndicator();
+        child: OrientationBuilder(builder: (context, orientation) {
+          return BlocBuilder(
+              bloc: _movieTrailerBloc,
+              // ignore: missing_return
+              builder: (context, state) {
+                if (state is MovieTrailerLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-              }
-              if (state is MovieTrailerError) {
-                return Center(
-                  child: Text('failed to fetch response: ${state.errorCode}'),
-                );
-              }
-            },
-          ) /*Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                'Movie Id: ${widget.movieList.movieId}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.0),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Text(
-                'Title: ${widget.movieList.title}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.0),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Text(
-                'Overview: ${widget.movieList.overview}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.0),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Text(
-                'Vote: ${widget.movieList.vote}',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.0),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-            ],
-          )*/
-          ,
-        ),
+                if (state is MovieTrailerSuccess) {
+                  if (state.movieTrailerList.isNotEmpty) {
+                    print(
+                        'movieTrailerList length: ${state.movieTrailerList.length}');
+                    return CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        MovieDetailAppBar(
+                          movieList: widget.movieList,
+                          isShrink: isShrink,
+                        ),
+                        SliverPadding(
+                          padding: const EdgeInsets.all(8.0),
+                          // In this example, the inner scroll view has
+                          // fixed-height list items, hence the use of
+                          // SliverFixedExtentList. However, one could use any
+                          // sliver widget here, e.g. SliverList or SliverGrid.
+                          sliver: SliverFillViewport(
+                            // The items in this example are fixed to 48 pixels
+                            // high. This matches the Material Design spec for
+                            // ListTile widgets.
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              // This builder is called for each child.
+                              // In this example, we just number each list item.
+                              return Container(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      'Title: ${widget.movieList.title}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17.0),
+                                    ),
+                                    SizedBox(
+                                      height: 15.0,
+                                    ),
+                                    Text(
+                                      'Movie Id: ${widget.movieList.movieId}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17.0),
+                                    ),
+                                    SizedBox(
+                                      height: 15.0,
+                                    ),
+                                    Text(
+                                      'Overview: ${widget.movieList.overview}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17.0),
+                                    ),
+                                    SizedBox(
+                                      height: 15.0,
+                                    ),
+                                    Text(
+                                      'Vote: ${widget.movieList.vote}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17.0),
+                                    ),
+                                    SizedBox(
+                                      height: 15.0,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }, childCount: 1
+                                // The childCount of the SliverChildBuilderDelegate
+                                // specifies how many children this inner list
+                                // has. In this example, each tab has a list of
+                                // exactly 30 items, but this is arbitrary.
+                                ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                }
+                if (state is MovieTrailerError) {
+                  return Center(
+                    child: Text('failed to fetch response: ${state.errorCode}'),
+                  );
+                }
+              });
+        }),
       ),
     );
   }

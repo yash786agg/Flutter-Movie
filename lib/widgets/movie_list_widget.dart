@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_bloc_provider.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
-import 'package:flutter_movie/domain/repository/movie_repository.dart';
 import 'package:flutter_movie/screens/movie_detail_screen.dart';
 import 'package:flutter_movie/util/contants.dart';
 

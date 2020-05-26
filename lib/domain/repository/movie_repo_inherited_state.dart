@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_movie/datasource/remote/api_client.dart';
-import 'package:http/http.dart' as http;
 import 'movie_repository.dart';
 
+// Link:- https://ericwindmill.com/articles/inherited_widget/
+// Link:- https://bloclibrary.dev/#/flutterweathertutorial
 class _MovieRepoInheritedState extends InheritedWidget {
   // Data is your entire state. In our case just 'User'
   final MovieRepoStateContainerState data;
