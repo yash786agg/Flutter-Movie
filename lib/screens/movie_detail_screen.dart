@@ -5,6 +5,7 @@ import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_bloc_provi
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_state.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
+import 'package:flutter_movie/domain/model/movie_trailer.dart';
 import 'package:flutter_movie/widgets/movie_detail_app_bar.dart';
 import 'package:flutter_movie/widgets/movie_detail_description.dart';
 
@@ -103,6 +104,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                       MovieDetailDescription(
                                         movieList: widget.movieList,
                                       ),
+                                      trailerLayout(
+                                          state.movieTrailerList[index])
                                     ],
                                   ),
                                 ),
@@ -126,6 +129,43 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 }
               });
         }),
+      ),
+    );
+  }
+
+  Widget noTrailer(MovieTrailer data) {
+    return Center(
+      child: Container(
+        child: Text("No trailer available"),
+      ),
+    );
+  }
+
+  Widget trailerLayout(MovieTrailer data) {
+    return Row(
+      children: <Widget>[
+        trailerItem(data, 0),
+        trailerItem(data, 1),
+      ],
+    );
+  }
+
+  trailerItem(MovieTrailer data, int index) {
+    return Expanded(
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(5.0),
+            height: 100.0,
+            color: Colors.grey,
+            child: Center(child: Icon(Icons.play_circle_filled)),
+          ),
+          Text(
+            data.trailerName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }
