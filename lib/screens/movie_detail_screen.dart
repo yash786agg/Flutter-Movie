@@ -6,6 +6,7 @@ import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_event.dart
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_state.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
 import 'package:flutter_movie/widgets/movie_detail_app_bar.dart';
+import 'package:flutter_movie/widgets/movie_detail_description.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final MovieList movieList;
@@ -36,7 +37,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   @override
   void didChangeDependencies() {
-    print('didChangeDependencies MovieDetailScreen');
     _movieTrailerBloc = MovieTrailerBlocProvider.of(context)
       ..add(FetchMovieTrailer(movieId: widget.movieList.movieId));
     super.didChangeDependencies();
@@ -93,52 +93,18 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                               // This builder is called for each child.
                               // In this example, we just number each list item.
                               return Container(
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      'Title: ${widget.movieList.title}',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17.0),
-                                    ),
-                                    SizedBox(
-                                      height: 15.0,
-                                    ),
-                                    Text(
-                                      'Movie Id: ${widget.movieList.movieId}',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17.0),
-                                    ),
-                                    SizedBox(
-                                      height: 15.0,
-                                    ),
-                                    Text(
-                                      'Overview: ${widget.movieList.overview}',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17.0),
-                                    ),
-                                    SizedBox(
-                                      height: 15.0,
-                                    ),
-                                    Text(
-                                      'Vote: ${widget.movieList.vote}',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17.0),
-                                    ),
-                                    SizedBox(
-                                      height: 15.0,
-                                    ),
-                                  ],
+                                child: Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      MovieDetailDescription(
+                                        movieList: widget.movieList,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             }, childCount: 1
