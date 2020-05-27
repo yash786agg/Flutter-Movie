@@ -24,7 +24,7 @@ for both Mobile and Tablet**, and even when the screen rotates.
 
  ## Future RoadMap Features
 
- * __[Dark and Light themes]__
+ * __Dark and Light themes__
 
  # Prerequisites
  * __Android Studio 3.6.3__
