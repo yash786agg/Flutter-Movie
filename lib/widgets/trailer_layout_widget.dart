@@ -12,7 +12,7 @@ class TrailerLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150.0,
+      height: 170.0,
       child: OrientationBuilder(builder: (context, orientation) {
         return new ListView.builder(
           itemCount: trailerData.length,
@@ -34,29 +34,32 @@ class TrailerLayout extends StatelessWidget {
                 );
               },
               child: Container(
-                width: 150.0,
+                width: 170.0,
                 margin: EdgeInsets.all(10.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            '${Constant.imageAppendUrl}$trailerThumbNail',
+                    Expanded(
+                      child: Container(
+                        height: 120.0,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              '${Constant.imageAppendUrl}$trailerThumbNail',
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.play_circle_filled,
+                            color: Colors.white,
+                            size: 35.0,
+                          ),
                         ),
                       ),
-                      child: Center(
-                        child: Icon(
-                          Icons.play_circle_filled,
-                          color: Colors.white,
-                          size: 35.0,
-                        ),
-                      ),
+                      flex: 1,
                     ),
                     SizedBox(
                       height: 5.0,
