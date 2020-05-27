@@ -6,6 +6,8 @@ import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_event.dart
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_state.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
 import 'package:flutter_movie/domain/model/movie_trailer.dart';
+import 'package:flutter_movie/util/contants.dart';
+import 'package:flutter_movie/widgets/app_launcher.dart';
 import 'package:flutter_movie/widgets/movie_detail_app_bar.dart';
 import 'package:flutter_movie/widgets/movie_detail_description.dart';
 
@@ -70,8 +72,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 }
                 if (state is MovieTrailerSuccess) {
                   if (state.movieTrailerList.isNotEmpty) {
-                    print(
-                        'movieTrailerList length: ${state.movieTrailerList.length}');
                     return CustomScrollView(
                       controller: _scrollController,
                       slivers: [
@@ -81,41 +81,28 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
-                          // In this example, the inner scroll view has
-                          // fixed-height list items, hence the use of
-                          // SliverFixedExtentList. However, one could use any
-                          // sliver widget here, e.g. SliverList or SliverGrid.
                           sliver: SliverFillViewport(
-                            // The items in this example are fixed to 48 pixels
-                            // high. This matches the Material Design spec for
-                            // ListTile widgets.
                             delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
-                              // This builder is called for each child.
-                              // In this example, we just number each list item.
-                              return Container(
-                                child: Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MovieDetailDescription(
-                                        movieList: widget.movieList,
-                                      ),
-                                      trailerLayout(
-                                          state.movieTrailerList[index])
-                                    ],
+                              (BuildContext context, int index) {
+                                return Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        MovieDetailDescription(
+                                          movieList: widget.movieList,
+                                        ),
+                                        trailerLayout(state.movieTrailerList)
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            }, childCount: 1
-                                // The childCount of the SliverChildBuilderDelegate
-                                // specifies how many children this inner list
-                                // has. In this example, each tab has a list of
-                                // exactly 30 items, but this is arbitrary.
-                                ),
+                                );
+                              },
+                              childCount: 1,
+                            ),
                           ),
                         ),
                       ],
@@ -141,32 +128,57 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     );
   }
 
-  Widget trailerLayout(MovieTrailer data) {
-    return Row(
-      children: <Widget>[
-        trailerItem(data, 0),
-        trailerItem(data, 1),
-      ],
-    );
-  }
-
-  trailerItem(MovieTrailer data, int index) {
-    return Expanded(
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(5.0),
-            height: 100.0,
-            color: Colors.grey,
-            child: Center(child: Icon(Icons.play_circle_filled)),
-          ),
-          Text(
-            data.trailerName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
+  Widget trailerLayout(List<MovieTrailer> trailerData) {
+    return Container(
+      height: 150.0,
+      child: LayoutBuilder(builder: (context, constraint) {
+        return new ListView.builder(
+          itemCount: trailerData.length,
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final items = trailerData[index];
+            return InkWell(
+              onTap: () {
+                String url = '${Constant.youtubeBaseUrl}${items.trailerKey}';
+                AppLauncher(url: url);
+              },
+              child: Container(
+                width: 150.0,
+                margin: EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 100.0,
+                      color: Colors.black,
+                      child: Center(
+                        child: Icon(
+                          Icons.play_circle_filled,
+                          color: Colors.grey,
+                          size: 48.0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Text(
+                      items.trailerName,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }),
     );
   }
 

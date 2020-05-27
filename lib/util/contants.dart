@@ -16,4 +16,6 @@ class Constant {
   static const String pageRequestTag = '&page=';
 
   static const String videosRequestTag = '/videos?';
+
+  static const String youtubeBaseUrl = 'http://youtu.be/';
 }
