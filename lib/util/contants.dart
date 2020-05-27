@@ -17,5 +17,6 @@ class Constant {
 
   static const String videosRequestTag = '/videos?';
 
-  static const String youtubeBaseUrl = 'http://youtu.be/';
+  static const String youtubeBaseUrl =
+      'https://www.youtube.com/watch?v='; //'http://youtu.be/';
 }

@@ -95,7 +95,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                                         MovieDetailDescription(
                                           movieList: widget.movieList,
                                         ),
-                                        trailerLayout(state.movieTrailerList)
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        trailerLayout(state.movieTrailerList),
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -131,6 +137,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   Widget trailerLayout(List<MovieTrailer> trailerData) {
     return Container(
       height: 150.0,
+      color: Colors.green,
       child: LayoutBuilder(builder: (context, constraint) {
         return new ListView.builder(
           itemCount: trailerData.length,
@@ -141,7 +148,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             return InkWell(
               onTap: () {
                 String url = '${Constant.youtubeBaseUrl}${items.trailerKey}';
-                AppLauncher(url: url);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return AppLauncher(url: url);
+                    },
+                  ),
+                );
               },
               child: Container(
                 width: 150.0,
@@ -167,9 +181,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       maxLines: 1,
                       softWrap: true,
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],

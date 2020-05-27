@@ -32,7 +32,7 @@ dependencies:
   # An abstract class that helps to implement equality without needing to explicitly override == and hashCode.
   equatable: ^1.1.1
   # Launching a URL on Android and iOS. Supports web, phone, SMS, and email schemes.
-  url_launcher: ^5.4.10
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

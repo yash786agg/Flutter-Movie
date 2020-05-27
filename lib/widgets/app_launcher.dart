@@ -1,30 +1,84 @@
-import 'dart:io' show Platform;
-import 'package:flutter/cupertino.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class AppLauncher {
+import 'empty_widget.dart';
+
+class AppLauncher extends StatefulWidget {
   final String url;
   AppLauncher({@required this.url}) : assert(url != null);
 
-  Future<void> _launchURL(String url) async {
-    print('_launchURL $url');
-    if (Platform.isIOS) {
-      print('_launchURL ios if');
-      if (await canLaunch(url)) {
-        print('_launchURL ios if if');
-        final bool nativeAppLaunchSucceeded =
-            await launch(url, forceSafariVC: false, universalLinksOnly: true);
+  @override
+  _AppLauncherState createState() => _AppLauncherState();
+}
 
-        print(
-            '_launchURL ios nativeAppLaunchSucceeded: $nativeAppLaunchSucceeded');
-        if (!nativeAppLaunchSucceeded) await launch(url, forceSafariVC: true);
-      }
-    } else {
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    }
+class _AppLauncherState extends State<AppLauncher> {
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+  final _key = UniqueKey();
+  bool _isLoadingPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLoadingPage = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('WebView'),
+      ),
+      body: Stack(
+        children: [
+          WebView(
+            initialUrl: widget.url,
+            key: _key,
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (WebViewController webViewController) {
+              _controller.complete(webViewController);
+              webViewController.loadUrl(widget.url);
+            },
+            onPageFinished: (finish) {
+              setState(() {
+                _isLoadingPage = false;
+              });
+            },
+          ),
+          _isLoadingPage
+              ? Container(
+                  alignment: FractionalOffset.center,
+                  child: CircularProgressIndicator(),
+                )
+              : EmptyWidget(),
+        ],
+      ),
+    );
   }
 }
+
+/*class AppLauncher extends StatelessWidget {
+  final String url;
+  AppLauncher({@required this.url}) : assert(url != null);
+
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('WebView'),
+      ),
+      body: WebView(
+        initialUrl: url,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController webViewController) {
+          _controller.complete(webViewController);
+          webViewController.loadUrl(url);
+        },
+      ),
+    );
+  }
+}*/
