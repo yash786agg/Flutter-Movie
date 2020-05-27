@@ -6,7 +6,8 @@ import 'empty_widget.dart';
 
 class AppLauncher extends StatefulWidget {
   final String url;
-  AppLauncher({@required this.url}) : assert(url != null);
+  final String trailerName;
+  AppLauncher({@required this.url, this.trailerName}) : assert(url != null);
 
   @override
   _AppLauncherState createState() => _AppLauncherState();
@@ -28,7 +29,19 @@ class _AppLauncherState extends State<AppLauncher> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('WebView'),
+        centerTitle: false,
+        title: Text(
+          widget.trailerName,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.start,
+          softWrap: true,
+          maxLines: 1,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 17.0,
+          ),
+        ),
       ),
       body: Stack(
         children: [
