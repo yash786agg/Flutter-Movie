@@ -7,7 +7,7 @@ An Flutter application to list all the popular movies with the detail descriptio
 ![Android](./screenshots/movie_android_demo.gif?raw=true 'android')
 ![IOS](./screenshots/movie_ios_demo.gif?raw=true 'ios')
 
-T## Languages, libraries and tools used
+## Languages, libraries and tools used
 
  * __[Flutter APIs](https://api.flutter.dev/)__
  * __[Flutter Dependencies](https://pub.dev/)__
