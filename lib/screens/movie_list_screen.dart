@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
+import 'package:flutter_movie/screens/settings_screen.dart';
 import 'package:flutter_movie/widgets/bottom_loading_indicator.dart';
 import 'package:flutter_movie/widgets/movie_list_widget.dart';
+import 'package:flutter_movie/widgets/popup_menu_options.dart';
 
 class MovieListScreen extends StatefulWidget {
   @override
@@ -30,10 +32,32 @@ class _MovieListScreenState extends State<MovieListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movies'),
-        backgroundColor: Colors.blue,
+        title: Text(
+          'Movies',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
         centerTitle: true,
-        elevation: 16.0,
+        elevation: 50.0,
+        actions: [
+          PopUpMenuOptions(
+            onSelected: (OptionsMenu result) {
+              switch (result) {
+                case OptionsMenu.settings:
+                  print('PopUpMenuOptions settings clicked!!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SettingScreen();
+                      },
+                    ),
+                  );
+                  break;
+              }
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

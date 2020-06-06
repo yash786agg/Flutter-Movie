@@ -17,6 +17,10 @@ class MovieDetailAppBar extends StatelessWidget {
       pinned: true,
       snap: true,
       elevation: 50,
+      backgroundColor: Colors.white,
+      iconTheme: IconThemeData(
+        color: isShrink ? Colors.black : Colors.white,
+      ),
       title: AnimatedOpacity(
         duration: Duration(milliseconds: 300),
         opacity: isShrink ? 1.0 : 0.0,
@@ -27,8 +31,9 @@ class MovieDetailAppBar extends StatelessWidget {
             textAlign: TextAlign.start,
             softWrap: false,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 19.0,
+              fontWeight: FontWeight.bold,
             )),
       ),
       flexibleSpace: FlexibleSpaceBar(

@@ -19,4 +19,6 @@ class Constant {
 
   static const String youtubeBaseUrl =
       'https://www.youtube.com/watch?v='; //'http://youtu.be/';
+
+  static const SHARED_PREF_KEY_THEME = "theme_code";
 }
