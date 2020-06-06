@@ -73,7 +73,13 @@ class _MovieListScreenState extends State<MovieListScreen> {
               builder: (context, state) {
                 if (state is MovieListLoading) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        accentColor:
+                            AppStateContainer.of(context).theme.primaryColor,
+                      ),
+                      child: new CircularProgressIndicator(),
+                    ),
                   );
                 }
                 if (state is MovieListSuccess) {

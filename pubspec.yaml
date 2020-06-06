@@ -34,7 +34,7 @@ dependencies:
   # Launching a URL on Android and iOS. Supports web, phone, SMS, and email schemes.
   webview_flutter: ^0.3.22+1
   # Wrapper for NSUserDefaults on iOS and SharedPreferences on Android
-  shared_preferences: ^0.5.7+3
+  shared_preferences: 0.5.3+1
 
 dev_dependencies:
   flutter_test:

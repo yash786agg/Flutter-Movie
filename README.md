@@ -22,10 +22,6 @@ Above Features are used to make code simple, generic, understandable, clean and 
 for future development.This application supports the screen rotation which gives better **UI support
 for both Mobile and Tablet**, and even when the screen rotates.
 
- ## Future RoadMap Features
-
- * __Dark and Light themes__
-
  # Prerequisites
  * __Android Studio 3.6.3__
  * __Dart version >=2.1.0 <3.0.0__

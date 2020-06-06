@@ -74,28 +74,3 @@ class _AppLauncherState extends State<AppLauncher> {
     );
   }
 }
-
-/*class AppLauncher extends StatelessWidget {
-  final String url;
-  AppLauncher({@required this.url}) : assert(url != null);
-
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('WebView'),
-      ),
-      body: WebView(
-        initialUrl: url,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-          webViewController.loadUrl(url);
-        },
-      ),
-    );
-  }
-}*/
