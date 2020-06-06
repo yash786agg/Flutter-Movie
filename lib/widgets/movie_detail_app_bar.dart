@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
 import 'package:flutter_movie/util/contants.dart';
 
+import 'app_state_container.dart';
+
 class MovieDetailAppBar extends StatelessWidget {
   final bool isShrink;
   final MovieList movieList;
@@ -17,9 +19,11 @@ class MovieDetailAppBar extends StatelessWidget {
       pinned: true,
       snap: true,
       elevation: 50,
-      backgroundColor: Colors.white,
+      backgroundColor: AppStateContainer.of(context).theme.primaryColor,
       iconTheme: IconThemeData(
-        color: isShrink ? Colors.black : Colors.white,
+        color: isShrink
+            ? AppStateContainer.of(context).theme.accentColor
+            : Colors.white,
       ),
       title: AnimatedOpacity(
         duration: Duration(milliseconds: 300),
@@ -31,7 +35,7 @@ class MovieDetailAppBar extends StatelessWidget {
             textAlign: TextAlign.start,
             softWrap: false,
             style: TextStyle(
-              color: Colors.black,
+              color: AppStateContainer.of(context).theme.accentColor,
               fontSize: 19.0,
               fontWeight: FontWeight.bold,
             )),

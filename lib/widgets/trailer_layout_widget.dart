@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_movie/domain/model/movie_trailer.dart';
 import 'package:flutter_movie/util/contants.dart';
 import 'app_launcher.dart';
+import 'app_state_container.dart';
 
 class TrailerLayout extends StatelessWidget {
   final List<MovieTrailer> trailerData;
@@ -43,7 +44,8 @@ class TrailerLayout extends StatelessWidget {
                       child: Container(
                         height: 120.0,
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color:
+                              AppStateContainer.of(context).theme.accentColor,
                           image: DecorationImage(
                             image: NetworkImage(
                               '${Constant.imageAppendUrl}$trailerThumbNail',
@@ -69,7 +71,7 @@ class TrailerLayout extends StatelessWidget {
                       maxLines: 1,
                       softWrap: true,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppStateContainer.of(context).theme.accentColor,
                         fontSize: 14.0,
                         fontWeight: FontWeight.bold,
                       ),

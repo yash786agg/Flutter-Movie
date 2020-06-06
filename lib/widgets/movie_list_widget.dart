@@ -4,6 +4,8 @@ import 'package:flutter_movie/domain/model/movie_list.dart';
 import 'package:flutter_movie/screens/movie_detail_screen.dart';
 import 'package:flutter_movie/util/contants.dart';
 
+import 'app_state_container.dart';
+
 class MovieListWidget extends StatelessWidget {
   MovieListWidget({Key key, @required this.movieList})
       : assert(movieList != null),
@@ -13,6 +15,7 @@ class MovieListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: AppStateContainer.of(context).theme.primaryColor,
       elevation: 8.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -23,7 +26,6 @@ class MovieListWidget extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                //return MovieDetailScreen(movieList: movieList);
                 return MovieTrailerBlocProvider(
                   child: MovieDetailScreen(movieList: movieList),
                 );
@@ -53,7 +55,7 @@ class MovieListWidget extends StatelessWidget {
               child: Text(
                 movieList.title,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: AppStateContainer.of(context).theme.accentColor,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,

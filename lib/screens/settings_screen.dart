@@ -29,7 +29,9 @@ class SettingScreen extends StatelessWidget {
               child: Text(
                 "Theme",
                 style: TextStyle(
-                  color: AppStateContainer.of(context).theme.accentColor,
+                  color: AppStateContainer.of(context).themeCode == 0
+                      ? AppStateContainer.of(context).theme.primaryColor
+                      : AppStateContainer.of(context).theme.accentColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -39,10 +41,9 @@ class SettingScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                color: AppStateContainer.of(context)
-                    .theme
-                    .accentColor
-                    .withOpacity(0.1),
+                color: AppStateContainer.of(context).themeCode == 0
+                    ? AppStateContainer.of(context).theme.primaryColor
+                    : Colors.white,
               ),
               padding: EdgeInsets.only(left: 10, right: 10),
               child: Row(
@@ -59,8 +60,9 @@ class SettingScreen extends StatelessWidget {
                     onChanged: (value) {
                       AppStateContainer.of(context).updateTheme(value);
                     },
-                    activeColor:
-                        AppStateContainer.of(context).theme.accentColor,
+                    activeColor: AppStateContainer.of(context).themeCode == 0
+                        ? AppStateContainer.of(context).theme.accentColor
+                        : AppStateContainer.of(context).theme.accentColor,
                   )
                 ],
               ),
@@ -74,10 +76,9 @@ class SettingScreen extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(8),
                     bottomRight: Radius.circular(8)),
-                color: AppStateContainer.of(context)
-                    .theme
-                    .accentColor
-                    .withOpacity(0.1),
+                color: AppStateContainer.of(context).themeCode == 0
+                    ? AppStateContainer.of(context).theme.accentColor
+                    : AppStateContainer.of(context).theme.primaryColor,
               ),
               padding: EdgeInsets.only(left: 10, right: 10),
               child: Row(
@@ -86,7 +87,9 @@ class SettingScreen extends StatelessWidget {
                   Text(
                     "Light",
                     style: TextStyle(
-                        color: AppStateContainer.of(context).theme.accentColor),
+                        color: AppStateContainer.of(context).themeCode == 0
+                            ? AppStateContainer.of(context).theme.primaryColor
+                            : AppStateContainer.of(context).theme.accentColor),
                   ),
                   Radio(
                     value: Themes.LIGHT_THEME_CODE,
@@ -94,8 +97,9 @@ class SettingScreen extends StatelessWidget {
                     onChanged: (value) {
                       AppStateContainer.of(context).updateTheme(value);
                     },
-                    activeColor:
-                        AppStateContainer.of(context).theme.accentColor,
+                    activeColor: AppStateContainer.of(context).themeCode == 0
+                        ? AppStateContainer.of(context).theme.accentColor
+                        : AppStateContainer.of(context).theme.accentColor,
                   )
                 ],
               ),

@@ -5,6 +5,7 @@ import 'package:flutter_movie/domain/bloc/movie_list/movie_list_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
 import 'package:flutter_movie/screens/settings_screen.dart';
+import 'package:flutter_movie/widgets/app_state_container.dart';
 import 'package:flutter_movie/widgets/bottom_loading_indicator.dart';
 import 'package:flutter_movie/widgets/movie_list_widget.dart';
 import 'package:flutter_movie/widgets/popup_menu_options.dart';
@@ -34,9 +35,11 @@ class _MovieListScreenState extends State<MovieListScreen> {
       appBar: AppBar(
         title: Text(
           'Movies',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: AppStateContainer.of(context).theme.accentColor,
+          ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppStateContainer.of(context).theme.primaryColor,
         centerTitle: true,
         elevation: 50.0,
         actions: [
@@ -59,7 +62,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppStateContainer.of(context).theme.accentColor,
       body: SafeArea(
         top: true,
         bottom: false,

@@ -5,6 +5,7 @@ import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_bloc_provi
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_trailer/movie_trailer_state.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
+import 'package:flutter_movie/widgets/app_state_container.dart';
 import 'package:flutter_movie/widgets/empty_trailer_layout_widget.dart';
 import 'package:flutter_movie/widgets/movie_detail_app_bar.dart';
 import 'package:flutter_movie/widgets/movie_detail_description.dart';
@@ -55,7 +56,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppStateContainer.of(context).theme.primaryColor,
       body: SafeArea(
         top: false,
         bottom: false,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/domain/model/movie_list.dart';
 
+import 'app_state_container.dart';
+
 class MovieDetailDescription extends StatelessWidget {
   final MovieList movieList;
   MovieDetailDescription({this.movieList}) : assert(movieList != null);
@@ -12,7 +14,7 @@ class MovieDetailDescription extends StatelessWidget {
           '${movieList.title}',
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: Colors.black,
+            color: AppStateContainer.of(context).theme.accentColor,
             fontWeight: FontWeight.bold,
             fontSize: 25.0,
           ),
@@ -39,7 +41,7 @@ class MovieDetailDescription extends StatelessWidget {
                   Text(
                     '${movieList.vote}',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: AppStateContainer.of(context).theme.accentColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 19.0),
                   )
@@ -53,7 +55,7 @@ class MovieDetailDescription extends StatelessWidget {
               'Release Date: ${movieList.releaseDate}',
               textAlign: TextAlign.end,
               style: TextStyle(
-                  color: Colors.black,
+                  color: AppStateContainer.of(context).theme.accentColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 17.0),
             ),
@@ -65,7 +67,9 @@ class MovieDetailDescription extends StatelessWidget {
         Text(
           '${movieList.overview}',
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17.0),
+              color: AppStateContainer.of(context).theme.accentColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 17.0),
         ),
         SizedBox(
           height: 15.0,
@@ -73,7 +77,7 @@ class MovieDetailDescription extends StatelessWidget {
         Text(
           'Trailer',
           style: TextStyle(
-            color: Colors.black,
+            color: AppStateContainer.of(context).theme.accentColor,
             fontWeight: FontWeight.bold,
             fontSize: 22.0,
           ),
