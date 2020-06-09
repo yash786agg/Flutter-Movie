@@ -1,14 +1,11 @@
+name: Test, Build and Release apk
 # This workflow is triggered on pushes to the repository.
-
 on:
   push:
     branches:
       - master
 
 # on: push    # Default will running for every branch.
-
-name: Test, Build and Release apk
-
 jobs:
   build:
     name: Build APK
