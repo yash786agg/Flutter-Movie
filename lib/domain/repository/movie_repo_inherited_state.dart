@@ -33,8 +33,8 @@ class MovieRepoStateContainer extends StatefulWidget {
   // Exactly like MediaQuery.of and Theme.of
   // It basically says 'get the data from the widget of this type.
   static MovieRepoStateContainerState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(_MovieRepoInheritedState)
-            as _MovieRepoInheritedState)
+    return context
+        .dependOnInheritedWidgetOfExactType<_MovieRepoInheritedState>()
         .data;
   }
 
