@@ -2,6 +2,8 @@
 
 An Flutter application to list all the popular movies with the detail description and trailers clips.
 
+![Flutter CI Github Actions](https://github.com/yash786agg/Flutter-Movie/workflows/Test,%20Build%20and%20Release%20apk/badge.svg?branch=master)
+
 # Demo
 
 ![Android](./screenshots/movie_android_demo.gif?raw=true 'android')
