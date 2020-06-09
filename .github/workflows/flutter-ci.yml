@@ -5,42 +5,42 @@ on:
     branches:
       - master
 
-# on: push    # Default will running for every branch.
+    # on: push    # Default will running for every branch.
+
 jobs:
   build:
-    name: Build APK
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
     steps:
-    # Setup Java environment in order to build the Android app.
+
+      # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
 
-    # Setup the flutter environment.
+      # Setup the flutter environment.
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable' #'beta', 'dev', 'alpha', default to: 'stable'
           # flutter-version: '1.12.x' # you can also specify exact version of flutter
 
-    # Get flutter dependencies.
+      # Get flutter dependencies.
       - run: flutter pub get
 
-    # Check for any formatting issues in the code.
+      # Check for any formatting issues in the code.
       - run: flutter format --set-exit-if-changed .
 
-    # Statically analyze the Dart code for any errors.
+      # Statically analyze the Dart code for any errors.
       - run: flutter analyze .
 
-    # Run widget tests for our flutter project.
+      # Run widget tests for our flutter project.
       - run: flutter test
 
-    # Build apk.
+      # Build apk.
       - run: flutter build apk --debug --split-per-abi
 
-    # Upload generated apk to the artifacts.
-      - name: Create a Release APK
+      # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
