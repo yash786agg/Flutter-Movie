@@ -54,6 +54,7 @@ class MovieListWidget extends StatelessWidget {
             Center(
               child: Text(
                 movieList.title,
+                key: Key('movie_title_text'),
                 style: TextStyle(
                   color: AppStateContainer.of(context).theme.accentColor,
                   fontWeight: FontWeight.bold,

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_movie/datasource/remote/api_client.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_bloc.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
+import 'package:flutter_movie/domain/repository/movie_repository.dart';
 import 'package:flutter_movie/screens/settings_screen.dart';
 import 'package:flutter_movie/widgets/app_state_container.dart';
 import 'package:flutter_movie/widgets/bottom_loading_indicator.dart';
@@ -20,13 +22,17 @@ class _MovieListScreenState extends State<MovieListScreen> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 
+  final MovieRepository _movieRepository =
+      MovieRepository(movieApiClient: MovieApiClient());
+
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
     print('initState MovieListScreen');
 
-    _movieListBloc = MovieListBloc()..add(FetchMovieList());
+    _movieListBloc = MovieListBloc(movieRepository: _movieRepository)
+      ..add(FetchMovieList());
   }
 
   @override

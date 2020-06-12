@@ -7,7 +7,7 @@ import 'package:flutter_movie/domain/repository/movie_repository.dart';
 import 'package:flutter_movie/domain/model/movie_trailer.dart';
 
 class MovieTrailerBloc extends Bloc<MovieTrailerEvent, MovieTrailerState> {
-  final MovieRepository _movieRepository =
+  final MovieRepository movieRepository =
       MovieRepository(movieApiClient: MovieApiClient());
 
   @override
@@ -20,7 +20,7 @@ class MovieTrailerBloc extends Bloc<MovieTrailerEvent, MovieTrailerState> {
 
       try {
         final List<MovieTrailer> movieTrailerList =
-            await _movieRepository.fetchMovieTrailer(movieId: event.movieId);
+            await movieRepository.fetchMovieTrailer(movieId: event.movieId);
 
         yield MovieTrailerSuccess(movieTrailerList: movieTrailerList);
       } catch (exception) {

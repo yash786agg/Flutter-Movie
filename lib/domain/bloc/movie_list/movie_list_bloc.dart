@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_movie/datasource/remote/api_client.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_movie/datasource/remote/http_exception.dart';
 import 'package:flutter_movie/domain/bloc/movie_list/movie_list_event.dart';
@@ -7,8 +6,12 @@ import 'package:flutter_movie/domain/bloc/movie_list/movie_list_state.dart';
 import 'package:flutter_movie/domain/repository/movie_repository.dart';
 
 class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
-  final MovieRepository _movieRepository =
-      MovieRepository(movieApiClient: MovieApiClient());
+  /*final MovieRepository _movieRepository =
+      MovieRepository(movieApiClient: MovieApiClient());*/
+
+  final MovieRepository movieRepository;
+  MovieListBloc({this.movieRepository}) : assert(movieRepository != null);
+
   int pageValue = 1;
 
   @override
@@ -32,7 +35,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
           print(
               'MovieListBloc mapEventToState MovieListLoading pageValue: $pageValue');
           final movieData =
-              await _movieRepository.fetchPopularMovie(page: pageValue);
+              await movieRepository.fetchPopularMovie(page: pageValue);
           _updatePageValue(movieData.page);
           yield MovieListSuccess(
               movieList: movieData.movieList, hasReachedMax: false);
@@ -42,7 +45,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
           print(
               'MovieListBloc mapEventToState MovieListSuccess pageValue: $pageValue');
           final movieData =
-              await _movieRepository.fetchPopularMovie(page: pageValue);
+              await movieRepository.fetchPopularMovie(page: pageValue);
           yield movieData.totalPages == pageValue
               ? currentState.copyWith(hasReachedMax: true)
               : MovieListSuccess(
